@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unbeatable Tic-Tac-Toe</title>
+    <title>Truly Unbeatable Tic-Tac-Toe</title>
     <style>
-        /* Internal CSS for styling */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -15,9 +14,7 @@
             color: white;
             margin-top: 50px;
         }
-        h1 {
-            color: #61dafb;
-        }
+        h1 { color: #61dafb; }
         .board {
             display: grid;
             grid-template-columns: repeat(3, 100px);
@@ -39,15 +36,9 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        .cell:hover {
-            background-color: #3a3f4b;
-        }
-        .cell.X {
-            color: #ff6b6b;
-        }
-        .cell.O {
-            color: #4ecdc4;
-        }
+        .cell:hover { background-color: #3a3f4b; }
+        .cell.X { color: #ff6b6b; }
+        .cell.O { color: #4ecdc4; }
         #message {
             font-size: 1.5rem;
             height: 30px;
@@ -64,9 +55,7 @@
             color: #282c34;
             transition: background-color 0.2s;
         }
-        button:hover {
-            background-color: #4fa8c2;
-        }
+        button:hover { background-color: #4fa8c2; }
     </style>
 </head>
 <body>
@@ -89,18 +78,16 @@
     <button onclick="resetBoard()">Restart Game</button>
 
     <script>
-        // --- GAME STATE ---
         let board = ['', '', '', '', '', '', '', '', ''];
         let gameOver = false;
         const HUMAN = 'X';
         const AI = 'O';
 
-        // --- GAME LOGIC ---
         function checkWinner(currentBoard) {
             const winConditions = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-                [0, 4, 8], [2, 4, 6]             // Diagonals
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], 
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+                [0, 4, 8], [2, 4, 6]             
             ];
 
             for (let condition of winConditions) {
@@ -108,18 +95,13 @@
                 if (currentBoard[a] !== '' && 
                     currentBoard[a] === currentBoard[b] && 
                     currentBoard[a] === currentBoard[c]) {
-                    return currentBoard[a]; // Returns 'X' or 'O'
+                    return currentBoard[a]; 
                 }
             }
-
-            if (!currentBoard.includes('')) {
-                return 'TIE';
-            }
-
+            if (!currentBoard.includes('')) return 'TIE';
             return null;
         }
 
-        // --- MINIMAX ALGORITHM ---
         function minimax(currentBoard, depth, isMaximizing) {
             let winner = checkWinner(currentBoard);
             if (winner === AI) return 10 - depth;
@@ -168,12 +150,11 @@
             return move;
         }
 
-        // --- UI INTERACTION ---
         function updateUI() {
             const cells = document.querySelectorAll('.cell');
             cells.forEach((cell, i) => {
                 cell.innerText = board[i];
-                cell.className = 'cell ' + board[i]; // Add class for CSS styling
+                cell.className = 'cell ' + board[i]; 
             });
         }
 
@@ -188,37 +169,34 @@
         }
 
         function humanMove(index) {
+            // Ignore click if cell is taken or game is over
             if (board[index] !== '' || gameOver) return;
 
-            // 1. Human makes a move
+            // 1. Human Move
             board[index] = HUMAN;
-            updateUI();
             
             let winner = checkWinner(board);
             if (winner) {
+                updateUI();
                 handleGameEnd(winner);
                 return;
             }
 
-            // 2. AI makes a move
-            document.getElementById('message').innerText = 'AI is thinking...';
+            // 2. Instant AI Move
+            let bestMove = getBestMove();
+            if (bestMove !== -1) {
+                board[bestMove] = AI;
+            }
             
-            // Add a tiny delay so the AI doesn't feel instantly robotic
-            setTimeout(() => {
-                let bestMove = getBestMove();
-                if (bestMove !== -1) {
-                    board[bestMove] = AI;
-                }
-                
-                updateUI();
-                
-                winner = checkWinner(board);
-                if (winner) {
-                    handleGameEnd(winner);
-                } else {
-                    document.getElementById('message').innerText = "Your turn.";
-                }
-            }, 50);
+            // Update UI once for both moves
+            updateUI();
+            
+            winner = checkWinner(board);
+            if (winner) {
+                handleGameEnd(winner);
+            } else {
+                document.getElementById('message').innerText = "You are X. It's your turn.";
+            }
         }
 
         function resetBoard() {
