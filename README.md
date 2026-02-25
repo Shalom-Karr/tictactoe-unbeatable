@@ -6,7 +6,7 @@ A sleek, modern, browser-based Tic-Tac-Toe game where the AI is mathematically g
 ![Tech](https://img.shields.io/badge/Tech-HTML%20%7C%20CSS%20%7C%20JS-blue)
 
 Play at https://unbeatable-tictactoe.pages.dev
-
+---
 ## ✨ Features
 
 - **Unbeatable AI:** Powered by the Minimax algorithm. The best you can ever do is tie.
