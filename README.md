@@ -2,6 +2,9 @@
 
 A sleek, modern, browser-based Tic-Tac-Toe game where the AI is mathematically guaranteed to never lose. Play against it and try your best to force a draw!
 
+![Status](https://img.shields.io/badge/Status-Playable-brightgreen)
+![Tech](https://img.shields.io/badge/Tech-HTML%20%7C%20CSS%20%7C%20JS-blue)
+
 ## ✨ Features
 
 - **Unbeatable AI:** Powered by the Minimax algorithm. The best you can ever do is tie.
